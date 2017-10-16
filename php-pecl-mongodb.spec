@@ -5,23 +5,23 @@
 %define		php_name	php%{?php_suffix}
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
-Name:		php-pecl-%{modname}
-Version:	1.2.8
-Release:	0.1
+Name:		%{php_name}-pecl-%{modname}
+Version:	1.2.11
+Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
-Source0:	http://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	7c871c22fe7c8afdbe055e24075e95cf
+Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
+# Source0-md5:	c3b36a24b7e47e3b4148cd9bc4d163b2
 URL:		https://pecl.php.net/package/mongodb
-BuildRequires:	%{php_name}-devel
+BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	rpmbuild(macros) >= 1.666
 %if %{with tests}
 BuildRequires:	%{php_name}-json
 %endif
 BuildRequires:	cyrus-sasl-devel
+BuildRequires:	libbson-devel >= 1.5
+BuildRequires:	mongo-c-driver-devel >= 1.5
 BuildRequires:	openssl-devel
-BuildRequires:	pkgconfig(libbson-1.0) >= 1.5
-BuildRequires:	pkgconfig(libmongoc-1.0) >= 1.5
 Requires:	%{php_name}-json
 %{?requires_php_extension}
 Provides:	php(%{modname}) = %{version}
@@ -88,6 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 	EXTENSION_DIR=%{php_extensiondir} \
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
 cp -p %{modname}.ini $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
 
 %clean
@@ -95,6 +96,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc LICENSE
 %config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/%{modname}.ini
 %attr(755,root,root) %{php_extensiondir}/%{modname}.so
