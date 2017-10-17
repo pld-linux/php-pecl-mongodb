@@ -17,6 +17,7 @@ BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	rpmbuild(macros) >= 1.666
 %if %{with tests}
 BuildRequires:	%{php_name}-json
+BuildRequires:	%{php_name}-spl
 %endif
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	libbson-devel >= 1.5
@@ -72,6 +73,7 @@ phpize
 %{__php} -n -q \
 	-d extension_dir=modules \
 	-d extension=%{php_extensiondir}/json.so \
+	-d extension=%{php_extensiondir}/spl.so \
 	-d extension=%{modname}.so \
 	-m > modules.log
 grep %{modname} modules.log
