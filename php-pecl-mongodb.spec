@@ -12,6 +12,7 @@ License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
 # Source0-md5:	c3b36a24b7e47e3b4148cd9bc4d163b2
+Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	rpmbuild(macros) >= 1.666
@@ -37,15 +38,6 @@ MongoDB driver.
 %prep
 %setup -qc
 mv %{modname}-%{version}/* .
-
-# Create configuration file
-cat << 'EOF' > %{modname}.ini
-; Enable %{summary} extension module
-extension=%{modname}.so
-
-; Configuration
-;mongodb.debug=''
-EOF
 
 %build
 # Sanity check, really often broken
@@ -98,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
-cp -p %{modname}.ini $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
+cp -p %{SOURCE1}.ini $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
 
 %clean
 rm -rf $RPM_BUILD_ROOT
