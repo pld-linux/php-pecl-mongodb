@@ -13,6 +13,7 @@ Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
 # Source0-md5:	c3b36a24b7e47e3b4148cd9bc4d163b2
 Source1:	mongodb.ini
+Patch0:		tests.patch
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	rpmbuild(macros) >= 1.666
@@ -38,6 +39,7 @@ MongoDB driver.
 %prep
 %setup -qc
 mv %{modname}-%{version}/* .
+%patch0 -p1
 
 %build
 # Sanity check, really often broken
