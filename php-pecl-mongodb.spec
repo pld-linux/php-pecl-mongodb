@@ -68,8 +68,7 @@ phpize
 
 %{__make}
 
-%if %{with tests}
-# simple module load test
+# simple module load test, always enabled
 %{__php} -n -q \
 	-d extension_dir=modules \
 	-d extension=%{php_extensiondir}/json.so \
@@ -78,10 +77,18 @@ phpize
 	-m > modules.log
 grep %{modname} modules.log
 
+%if %{with tests}
+cat <<'EOF' > run-tests.sh
+#!/bin/sh
 export NO_INTERACTION=1 REPORT_EXIT_STATUS=1 MALLOC_CHECK_=2
-%{__make} test \
+exec %{__make} test \
 	PHP_EXECUTABLE=%{__php} \
-	PHP_TEST_SHARED_SYSTEM_EXTENSIONS="json"
+	PHP_TEST_SHARED_SYSTEM_EXTENSIONS="json spl" \
+	RUN_TESTS_SETTINGS="-q $*"
+EOF
+chmod +x run-tests.sh
+
+./run-tests.sh
 %endif
 
 %install
