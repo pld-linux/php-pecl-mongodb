@@ -92,7 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
-cp -p %{SOURCE1}.ini $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
 
 %clean
 rm -rf $RPM_BUILD_ROOT
