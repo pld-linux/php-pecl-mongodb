@@ -15,17 +15,15 @@ Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
 Source1:	mongodb.ini
 Patch0:		tests.patch
 URL:		https://pecl.php.net/package/mongodb
-BuildRequires:	%{php_name}-devel >= 4:5.4.0
-BuildRequires:	rpmbuild(macros) >= 1.666
-%if %{with tests}
 BuildRequires:	%{php_name}-cli
+BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-spl
-%endif
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	libbson-devel >= 1.5
 BuildRequires:	mongo-c-driver-devel >= 1.5
 BuildRequires:	openssl-devel
+BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
 %{?requires_php_extension}
 Provides:	php(%{modname}) = %{version}
