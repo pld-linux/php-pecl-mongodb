@@ -18,6 +18,7 @@ URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	rpmbuild(macros) >= 1.666
 %if %{with tests}
+BuildRequires:	%{php_name}-cli
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-spl
 %endif
