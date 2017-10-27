@@ -18,6 +18,7 @@ URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
 BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	%{php_name}-json
+BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 BuildRequires:	cyrus-sasl-devel
 BuildRequires:	libbson-devel >= 1.5
@@ -64,8 +65,9 @@ phpize
 # simple module load test, always enabled
 %{__php} -n -q \
 	-d extension_dir=modules \
-	-d extension=%{php_extensiondir}/json.so \
+	-d extension=%{php_extensiondir}/pcre.so \
 	-d extension=%{php_extensiondir}/spl.so \
+	-d extension=%{php_extensiondir}/json.so \
 	-d extension=%{modname}.so \
 	-m > modules.log
 grep %{modname} modules.log
@@ -76,7 +78,7 @@ cat <<'EOF' > run-tests.sh
 export NO_INTERACTION=1 REPORT_EXIT_STATUS=1 MALLOC_CHECK_=2
 exec %{__make} test \
 	PHP_EXECUTABLE=%{__php} \
-	PHP_TEST_SHARED_SYSTEM_EXTENSIONS="json spl" \
+	PHP_TEST_SHARED_SYSTEM_EXTENSIONS="pcre spl json" \
 	RUN_TESTS_SETTINGS="-q $*"
 EOF
 chmod +x run-tests.sh
