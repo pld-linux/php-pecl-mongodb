@@ -1,3 +1,7 @@
+# TODO
+# - ix86/x32 (php -m) prints::
+#   src/mongoc/mongoc-handshake.c:478 _append_and_truncate(): precondition failed: space_for_suffix >= 0
+#   Aborted
 #
 # Conditional build:
 %bcond_without	tests		# build without tests
@@ -30,6 +34,7 @@ Requires:	%{php_name}-pcre
 Requires:	%{php_name}-spl
 %{?requires_php_extension}
 Provides:	php(%{modname}) = %{version}
+ExcludeArch:	%{ix86} x32
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
