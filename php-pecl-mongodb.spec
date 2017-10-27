@@ -26,6 +26,8 @@ BuildRequires:	mongo-c-driver-devel >= 1.5
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
+Requires:	%{php_name}-pcre
+Requires:	%{php_name}-spl
 %{?requires_php_extension}
 Provides:	php(%{modname}) = %{version}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
