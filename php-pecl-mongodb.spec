@@ -25,8 +25,8 @@ BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 BuildRequires:	cyrus-sasl-devel
-BuildRequires:	libbson-devel >= 1.5
-BuildRequires:	mongo-c-driver-devel >= 1.5
+BuildRequires:	libbson-devel >= 1.5.0
+BuildRequires:	mongo-c-driver-devel >= 1.5.0
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
@@ -65,6 +65,7 @@ phpize
 %configure \
 	--with-libbson \
 	--with-libmongoc \
+	--with-mongodb-sasl \
 	--enable-mongodb
 
 %{__make}
