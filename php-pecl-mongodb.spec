@@ -5,6 +5,7 @@
 #
 # Conditional build:
 %bcond_without	tests		# build without tests
+%bcond_without	sasl		# Include Cyrus SASL support
 
 %define		php_name	php%{?php_suffix}
 %define		modname	mongodb
@@ -24,7 +25,7 @@ BuildRequires:	%{php_name}-devel >= 4:5.4.0
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
-BuildRequires:	cyrus-sasl-devel
+%{?with_sasl:BuildRequires:	cyrus-sasl-devel}
 BuildRequires:	libbson-devel >= 1.5.0
 BuildRequires:	mongo-c-driver-devel >= 1.5.0
 BuildRequires:	openssl-devel
@@ -65,7 +66,7 @@ phpize
 %configure \
 	--with-libbson \
 	--with-libmongoc \
-	--with-mongodb-sasl \
+	--with-mongodb-sasl=%{!?with_sasl:no}%{?with_sasl:yes} \
 	--enable-mongodb
 
 %{__make}
