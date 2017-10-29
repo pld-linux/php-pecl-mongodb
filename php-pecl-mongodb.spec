@@ -49,6 +49,13 @@ MongoDB driver.
 mv %{modname}-%{version}/* .
 %patch0 -p1
 
+# Ensure we use system library
+# remove only C sources, m4 resources needed for phpize via m4_include
+find \
+	src/libbson \
+	src/libmongoc \
+	-name '*.[ch]' | xargs %{__rm} -v
+
 %build
 # Sanity check, really often broken
 extver=$(sed -n '/#define PHP_MONGODB_VERSION/{s/.* "//;s/".*$//;p}' php_phongo.h)
@@ -58,10 +65,6 @@ if test "x${extver}" != "x%{version}"; then
 fi
 
 phpize
-# Ensure we use system library
-# Need to be removed only after phpize because of m4_include
-%{__rm} -r src/libbson
-%{__rm} -r src/libmongoc
 
 %configure \
 	--with-libbson \
