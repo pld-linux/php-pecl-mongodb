@@ -11,14 +11,13 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.2.11
+Version:	1.3.1
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	c3b36a24b7e47e3b4148cd9bc4d163b2
+# Source0-md5:	eadf5eec8b9a59443b63ad49690dd73f
 Source1:	mongodb.ini
-Patch0:		tests.patch
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
 BuildRequires:	%{php_name}-devel >= 4:5.4.0
@@ -26,8 +25,8 @@ BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel}
-BuildRequires:	libbson-devel >= 1.5.0
-BuildRequires:	mongo-c-driver-devel >= 1.5.0
+BuildRequires:	libbson-devel >= 1.8.0
+BuildRequires:	mongo-c-driver-devel >= 1.8.0
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
@@ -47,7 +46,6 @@ MongoDB driver.
 %prep
 %setup -qc
 mv %{modname}-%{version}/* .
-%patch0 -p1
 
 # Ensure we use system library
 # remove only C sources, m4 resources needed for phpize via m4_include
