@@ -5,18 +5,20 @@
 #
 # Conditional build:
 %bcond_without	tests		# build without tests
-%bcond_without	sasl		# Include Cyrus SASL support
+%bcond_with	sasl		# Include Cyrus SASL support (for bundled only)
+%bcond_with	ssl		# Enable TLS connections and SCRAM-SHA-1 authentication (for bundled only)
+%bcond_with	bundled		# Use bundled libbson, libmongoc
 
 %define		php_name	php%{?php_suffix}
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.3.2
+Version:	1.4.2
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	6472d7fbfbbbd7e6efd0fc1011e4b7b5
+# Source0-md5:	28084c896be33df1ca268898646b7e32
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
@@ -25,8 +27,10 @@ BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel}
+%if %{without bundled}
 BuildRequires:	libbson-devel >= 1.8.0
-BuildRequires:	mongo-c-driver-devel >= 1.8.0
+BuildRequires:	mongo-c-driver-devel >= 1.9
+%endif
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
@@ -47,12 +51,14 @@ MongoDB driver.
 %setup -qc
 mv %{modname}-%{version}/* .
 
+%if %{without bundled}
 # Ensure we use system library
 # remove only C sources, m4 resources needed for phpize via m4_include
 find \
 	src/libbson \
 	src/libmongoc \
 	-name '*.[ch]' | xargs %{__rm} -v
+%endif
 
 %build
 # Sanity check, really often broken
@@ -65,8 +71,9 @@ fi
 phpize
 
 %configure \
-	--with-libbson \
-	--with-libmongoc \
+	--with-libbson=%{?with_bundled:no}%{!?with_bundled:yes} \
+	--with-libmongoc=%{?with_bundled:no}%{!?with_bundled:yes} \
+	--with-mongodb-ssl=%{!?with_ssl:no}%{?with_ssl:openssl} \
 	--with-mongodb-sasl=%{!?with_sasl:no}%{?with_sasl:yes} \
 	--enable-mongodb
 
