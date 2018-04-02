@@ -6,7 +6,7 @@
 # Conditional build:
 %bcond_without	tests		# build without tests
 %bcond_with	sasl		# Include Cyrus SASL support (for bundled only)
-%bcond_with	ssl		# Enable TLS connections and SCRAM-SHA-1 authentication (for bundled only)
+%bcond_without	ssl		# Enable TLS connections and SCRAM-SHA-1 authentication (for bundled only)
 %bcond_with	bundled		# Use bundled libbson, libmongoc
 
 %define		php_name	php%{?php_suffix}
@@ -110,12 +110,12 @@ rm -rf $RPM_BUILD_ROOT
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/openssl_%{modname}.ini
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/%{modname}.ini
+%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/*%{modname}.ini
 %attr(755,root,root) %{php_extensiondir}/%{modname}.so
