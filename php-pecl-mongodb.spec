@@ -19,6 +19,7 @@ License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
 # Source0-md5:	28084c896be33df1ca268898646b7e32
+Patch0:		php-version.patch
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
@@ -50,6 +51,7 @@ MongoDB driver.
 %prep
 %setup -qc
 mv %{modname}-%{version}/* .
+%patch0 -p1
 
 %if %{without bundled}
 # Ensure we use system library
