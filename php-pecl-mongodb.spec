@@ -14,7 +14,7 @@
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
 Version:	1.4.2
-Release:	1
+Release:	2
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
@@ -35,6 +35,7 @@ BuildRequires:	mongo-c-driver-devel >= 1.9
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
+Requires:	mongo-c-driver-libs >= 1.9.3-2
 Requires:	%{php_name}-pcre
 Requires:	%{php_name}-spl
 %{?requires_php_extension}
@@ -112,12 +113,12 @@ rm -rf $RPM_BUILD_ROOT
 	INSTALL_ROOT=$RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
-cp -p %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d/openssl_%{modname}.ini
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{php_sysconfdir}/conf.d
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/*%{modname}.ini
+%config(noreplace) %verify(not md5 mtime size) %{php_sysconfdir}/conf.d/%{modname}.ini
 %attr(755,root,root) %{php_extensiondir}/%{modname}.so
