@@ -13,23 +13,22 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.4.2
-Release:	2
+Version:	1.5.2
+Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	28084c896be33df1ca268898646b7e32
-Patch0:		php-version.patch
+# Source0-md5:	3569a12839c9908a25dac15df1ae9d18
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
-BuildRequires:	%{php_name}-devel >= 4:5.4.0
+BuildRequires:	%{php_name}-devel >= 4:5.5.0
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel}
 %if %{without bundled}
-BuildRequires:	libbson-devel >= 1.8.0
+BuildRequires:	libbson-devel >= 1.11.0
 BuildRequires:	mongo-c-driver-devel >= 1.9
 %endif
 BuildRequires:	openssl-devel
@@ -52,7 +51,6 @@ MongoDB driver.
 %prep
 %setup -qc
 mv %{modname}-%{version}/* .
-%patch0 -p1
 
 %if %{without bundled}
 # Ensure we use system library
@@ -64,8 +62,12 @@ find \
 %endif
 
 %build
+get_version() {
+	local define="$1" filename="$2"
+	awk -vdefine="$define" '/#define/ && $2 == define {print $3}' "$filename" | xargs
+}
 # Sanity check, really often broken
-extver=$(sed -n '/#define PHP_MONGODB_VERSION/{s/.* "//;s/".*$//;p}' php_phongo.h)
+extver=$(get_version PHP_MONGODB_VERSION phongo_version.h)
 if test "x${extver}" != "x%{version}"; then
 	: Error: Upstream extension version is ${extver}, expecting %{version}.
 	exit 1
