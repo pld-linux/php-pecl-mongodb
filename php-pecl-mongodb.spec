@@ -7,7 +7,7 @@
 %bcond_without	tests		# build without tests
 %bcond_with	sasl		# Include Cyrus SASL support (for bundled only)
 %bcond_without	ssl		# Enable TLS connections and SCRAM-SHA-1 authentication (for bundled only)
-%bcond_with	bundled		# Use bundled libbson, libmongoc
+%bcond_with	bundled		# Use bundled libmongoc
 
 %define		php_name	php%{?php_suffix}
 %define		modname	mongodb
@@ -56,9 +56,8 @@ mv %{modname}-%{version}/* .
 # Ensure we use system library
 # remove only C sources, m4 resources needed for phpize via m4_include
 find \
-	src/libbson \
 	src/libmongoc \
-	-name '*.[ch]' | xargs %{__rm} -v
+	-name '*.[ch]' -delete
 %endif
 
 %build
