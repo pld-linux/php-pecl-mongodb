@@ -13,12 +13,12 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.5.2
+Version:	1.5.5
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	3569a12839c9908a25dac15df1ae9d18
+# Source0-md5:	0839657e7fb4f5ea8113ef140835674a
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
@@ -76,7 +76,6 @@ while read line; do
 	xfail $t
 done << 'EOF'
 MongoDB\BSON\Javascript::__set_state() [tests/bson/bson-javascript-set_state-001.phpt]
-MongoDB\Driver\Exception\RuntimeException::hasErrorLabel() [tests/exception/runtimeexception-haserrorlabel-002.phpt]
 MongoDB\Driver\ReadPreference: var_export() [tests/readPreference/readpreference-var_export-001.phpt]
 MongoDB\Driver\Session with wrong defaultTransactionOptions [tests/session/session_error-001.phpt]
 EOF
