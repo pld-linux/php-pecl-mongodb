@@ -13,12 +13,12 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.6.1
+Version:	1.7.4
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	123e48da2f674de6d567b0bebbe049ac
+# Source0-md5:	e48806cdcf1a04e08ec0cd3f2bf05ae0
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
@@ -28,13 +28,15 @@ BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel}
 %if %{without bundled}
-BuildRequires:	libbson-devel >= 1.15.2
-BuildRequires:	mongo-c-driver-devel >= 1.15.2
+BuildRequires:	libbson-devel >= 1.16.2
+BuildRequires:	mongo-c-driver-devel >= 1.16.2
 %endif
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
+%if %{without bundled}
 Requires:	mongo-c-driver-libs >= 1.15.2
+%endif
 Requires:	%{php_name}-pcre
 Requires:	%{php_name}-spl
 %{?requires_php_extension}
@@ -95,8 +97,7 @@ fi
 phpize
 
 %configure \
-	--with-libbson=%{?with_bundled:no}%{!?with_bundled:yes} \
-	--with-libmongoc=%{?with_bundled:no}%{!?with_bundled:yes} \
+	--with-mongodb-system-libs=%{?with_bundled:no}%{!?with_bundled:yes} \
 	--with-mongodb-ssl=%{!?with_ssl:no}%{?with_ssl:openssl} \
 	--with-mongodb-sasl=%{!?with_sasl:no}%{?with_sasl:yes} \
 	--enable-mongodb
