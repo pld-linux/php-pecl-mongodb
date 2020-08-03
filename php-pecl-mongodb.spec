@@ -13,28 +13,28 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.5.5
+Version:	1.6.1
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	0839657e7fb4f5ea8113ef140835674a
+# Source0-md5:	123e48da2f674de6d567b0bebbe049ac
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
-BuildRequires:	%{php_name}-devel >= 4:5.5.0
+BuildRequires:	%{php_name}-devel >= 4:5.6.0
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel}
 %if %{without bundled}
-BuildRequires:	libbson-devel >= 1.11.0
-BuildRequires:	mongo-c-driver-devel >= 1.9
+BuildRequires:	libbson-devel >= 1.15.2
+BuildRequires:	mongo-c-driver-devel >= 1.15.2
 %endif
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
-Requires:	mongo-c-driver-libs >= 1.9.3-2
+Requires:	mongo-c-driver-libs >= 1.15.2
 Requires:	%{php_name}-pcre
 Requires:	%{php_name}-spl
 %{?requires_php_extension}
