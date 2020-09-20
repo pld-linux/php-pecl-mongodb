@@ -1,4 +1,5 @@
 # TODO
+# - libmongocrypt
 # - ix86/x32 (php -m) prints::
 #   src/mongoc/mongoc-handshake.c:478 _append_and_truncate(): precondition failed: space_for_suffix >= 0
 #   Aborted
@@ -13,23 +14,23 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.7.4
+Version:	1.8.0
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	e48806cdcf1a04e08ec0cd3f2bf05ae0
+# Source0-md5:	ea1b3198a1de04d26d1975a948b3f3a9
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
-BuildRequires:	%{php_name}-devel >= 4:5.6.0
+BuildRequires:	%{php_name}-devel >= 4:7.0
 BuildRequires:	%{php_name}-json
 BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel}
 %if %{without bundled}
-BuildRequires:	libbson-devel >= 1.16.2
-BuildRequires:	mongo-c-driver-devel >= 1.16.2
+BuildRequires:	libbson-devel >= 1.17.0
+BuildRequires:	mongo-c-driver-devel >= 1.17.0
 %endif
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
