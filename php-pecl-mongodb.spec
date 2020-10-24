@@ -14,12 +14,12 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.8.0
+Version:	1.8.1
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	ea1b3198a1de04d26d1975a948b3f3a9
+# Source0-md5:	724d61bd6df2c0e54ab6080f9ac44f5d
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
