@@ -80,6 +80,7 @@ while read line; do
 done << 'EOF'
 MongoDB\BSON\Javascript::__set_state() [tests/bson/bson-javascript-set_state-001.phpt]
 MongoDB\Driver\ReadPreference: var_export() [tests/readPreference/readpreference-var_export-001.phpt]
+MongoDB\Driver\Manager::__construct(): check if server is live [tests/manager/manager-ctor-server.phpt]
 EOF
 
 %build
