@@ -14,12 +14,12 @@
 %define		modname	mongodb
 Summary:	MongoDB driver for PHP
 Name:		%{php_name}-pecl-%{modname}
-Version:	1.9.0
+Version:	1.12.0
 Release:	1
 License:	Apache v2.0
 Group:		Development/Languages/PHP
 Source0:	https://pecl.php.net/get/%{modname}-%{version}.tgz
-# Source0-md5:	780f206f6a9399b5a4cabfd304f6ecff
+# Source0-md5:	f88bb3ab2ec98fb60108bac5fa20a681
 Source1:	mongodb.ini
 URL:		https://pecl.php.net/package/mongodb
 BuildRequires:	%{php_name}-cli
@@ -29,14 +29,14 @@ BuildRequires:	%{php_name}-pcre
 BuildRequires:	%{php_name}-spl
 %{?with_sasl:BuildRequires:	cyrus-sasl-devel}
 %if %{without bundled}
-BuildRequires:	libbson-devel >= 1.17.0
-BuildRequires:	mongo-c-driver-devel >= 1.17.0
+BuildRequires:	libbson-devel >= 1.20.0
+BuildRequires:	mongo-c-driver-devel >= 1.20.0
 %endif
 BuildRequires:	openssl-devel
 BuildRequires:	rpmbuild(macros) >= 1.666
 Requires:	%{php_name}-json
 %if %{without bundled}
-Requires:	mongo-c-driver-libs >= 1.15.2
+Requires:	mongo-c-driver-libs >= 1.20.0
 %endif
 Requires:	%{php_name}-pcre
 Requires:	%{php_name}-spl
@@ -80,7 +80,6 @@ while read line; do
 done << 'EOF'
 MongoDB\BSON\Javascript::__set_state() [tests/bson/bson-javascript-set_state-001.phpt]
 MongoDB\Driver\ReadPreference: var_export() [tests/readPreference/readpreference-var_export-001.phpt]
-MongoDB\Driver\Session with wrong defaultTransactionOptions [tests/session/session_error-001.phpt]
 EOF
 
 %build
